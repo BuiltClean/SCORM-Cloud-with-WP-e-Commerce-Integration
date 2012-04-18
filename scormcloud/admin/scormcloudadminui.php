@@ -28,6 +28,7 @@ class ScormCloudAdminUi
         $plugin_hooks[] = add_menu_page('SCORM Cloud Overview', 'SCORM Cloud', 'publish_posts', $topslug, array(__CLASS__, 'show_start_page'));
         $plugin_hooks[] = add_submenu_page($topslug, 'SCORM Cloud Courses', 'Courses', 'publish_posts', 'scormcloud/manage_courses', array(__CLASS__, 'show_manage_courses'));
         $plugin_hooks[] = add_submenu_page($topslug, 'SCORM Cloud Training', 'Training', 'publish_posts', 'scormcloud/manage_training', array(__CLASS__, 'show_manage_training'));
+		$plugin_hooks[] = add_submenu_page($topslug, 'SCORM Cloud WP e-Commerce Integration', 'WP e-Commerce', 'publish_posts', 'scormcloud/wp_ecommerce', array(__CLASS__, 'show_wp_ecommerce'));
         $plugin_hooks[] = add_submenu_page($topslug, 'SCORM Cloud Settings', 'Settings', 'publish_posts', 'scormcloud/admin/settings', array(__CLASS__, 'show_settings'));
         
         add_action('contextual_help', array(__CLASS__, 'contextual_help'), 10, 3);
@@ -58,6 +59,11 @@ class ScormCloudAdminUi
     public static function show_manage_training()
     {
         include('managetraining.php');
+    }
+    
+    public static function show_wp_ecommerce()
+    {
+        include('wpecommerce.php');
     }
     
     public static function show_settings()
@@ -156,6 +162,10 @@ class ScormCloudAdminUi
     	                </p>";
                     }
                     break;
+					
+				case 'scormcloud/wp_ecommerce':
+					$helpHtml .= '<p>To insert a course into a product, you should just be able to create a new product and then in the description, click the SCORM Cloud button to insert the course data into the product.</p>';
+					break;
     
                 case 'scormcloud/admin/settings':
                     $helpHtml .= '<p>The <span class="emph">App Id</span> and <span class="emph">Secret Key</span> can both be found by going to your <a href="http://cloud.scorm.com/sc/user/Apps">Apps Page</a> on the SCORM Cloud site. These values are essentially the "username and password" for WordPress to access your SCORM Cloud account.</p>';

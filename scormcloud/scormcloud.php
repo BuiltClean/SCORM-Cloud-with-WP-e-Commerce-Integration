@@ -1,13 +1,13 @@
-<?php
-/*
- Plugin Name: SCORM Cloud For WordPress
- Plugin URI: http://scorm.com/wordpress
- Description: Tap the power of SCORM to deliver and track training right from your WordPress-powered site. Just add the SCORM Cloud widget to the sidebar or use the SCORM Cloud button to add a link directly in a post or page.
- Author: Rustici Software
- Version: 1.1.6
- Author URI: http://www.scorm.com
- */
-
+<?php 
+	/*
+	Plugin Name: SCORM Cloud with WP e-Commerce Integration
+	Plugin URI: http://elearningenhanced.com/products/scorm-cloud-wp-e-commerce-integration
+	Description: This plug-in takes the existing SCORM Cloud plug-in and adds WP e-Commerce integration.
+	Author: BuiltClean
+	Version: 1.1.6
+	Author URI: http://www.builtclean.com
+	*/
+	
 define('SCORMCLOUD_BASE', WP_PLUGIN_DIR.'/'.str_replace(basename(__FILE__), '', plugin_basename(__FILE__)));
 
 require_once('scormcloudplugin.php');
@@ -24,4 +24,16 @@ add_action('plugins_loaded', array('ScormCloudPlugin', 'update_check'));
 add_action('init', array('ScormCloudPlugin', 'initialize'));
 add_action('init', array('ScormCloudUi', 'initialize'));
 add_action('widgets_init', array('ScormCloudUi', 'initialize_widgets'));
+
+	function scormcloud_enrollInPurchasedCourses($results) {
+		require_once('scormcloud_wp-ecommerce.php');
+		
+		return enrollInPurchasedCourses($results);
+	}
+	add_action('wpsc_transaction_result_cart_item', 'scormcloud_enrollInPurchasedCourses');
+
+	function scormcloud_addWPECommerceHook() {
+		require_once('scormcloud_wp-ecommerce.php');
+	}
+  
 

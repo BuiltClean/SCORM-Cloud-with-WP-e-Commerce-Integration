@@ -122,7 +122,7 @@ class ScormCloudContentHandler
 	                        $inviteHtml .= "<input name='launch' type='button' key='$inviteId' onclick='ScormCloud.Post.getLaunchURL(\"$inviteId\",\"$regId\");' url='" .get_option( 'siteurl' ) ."/wp-content/plugins/scormcloud/ajax.php' value='".__('Relaunch Training','scormcloud')."' />";
     
     
-	                    }else{
+	                    }else if(!get_option('scormcloud_wpecommerce')){
 	                        if ($regsRemaining > 0){
 	                            $inviteHtml .= "<input name='launch' type='button' key='$inviteId' onclick='ScormCloud.Post.makeUserRegLaunch(\"$inviteId\");' url='" .get_option( 'siteurl' ) ."/wp-content/plugins/scormcloud/ajax.php' value='Start Training'/>";
 	                        } else {
@@ -134,8 +134,9 @@ class ScormCloudContentHandler
 	                }
 				}
             }
-            $inviteHtml .= "<div class='inviteMessage'>message</div>";
-            //$inviteHtml .= "<div class='serviceCredit'>Delivery via <a href='http://www.scorm.com/scorm-solved/scorm-cloud/'>SCORM Cloud</a></div>";
+			if(!get_option('scormcloud_wpecommerce')) {
+				$inviteHtml .= "<div class='inviteMessage'>message</div>";
+			}
             $inviteHtml .= "</div>";
             $content = str_replace($tagString,$inviteHtml,$content);
         }
@@ -168,9 +169,6 @@ class ScormCloudContentHandler
 		}
     
         return $content;
-    
-    
-        //return $content;
     }
     
     public static function update_post_invite($postId){
